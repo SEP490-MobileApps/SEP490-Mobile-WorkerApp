@@ -4,5 +4,6 @@ export type RepairRequest = {
   status: number;
   apartmentRoom: string;
   requestedDate: string;
+  isCustomerPaying: boolean;
 };
 

@@ -1,12 +1,13 @@
 import { RepairRequest } from "../models/RepairRequest";
 
-export const repairRequests: RepairRequest[] = [
+export const REPAIR_REQUESTS: RepairRequest[] = [
   {
     name: "Sửa chữa ống nước",
     id: "a1b2-c3d4-e5f6-7890",
     status: 1, // 0: New request
     apartmentRoom: "201",
     requestedDate: "06/09/2024",
+    isCustomerPaying: false,
   },
   {
     name: "Thay bóng đèn",
@@ -14,6 +15,7 @@ export const repairRequests: RepairRequest[] = [
     status: 1, // 1: In progress
     apartmentRoom: "305",
     requestedDate: "15/09/2024",
+    isCustomerPaying: true,
   },
   {
     name: "Kiểm tra điện áp",
@@ -21,6 +23,7 @@ export const repairRequests: RepairRequest[] = [
     status: 2, // 2: Completed
     apartmentRoom: "502",
     requestedDate: "20/09/2024",
+    isCustomerPaying: true,
   },
   {
     name: "Sửa vòi nước",
@@ -28,6 +31,7 @@ export const repairRequests: RepairRequest[] = [
     status: 1, // 0: New request
     apartmentRoom: "1103",
     requestedDate: "03/10/2024",
+    isCustomerPaying: true,
   },
   {
     name: "Kiểm tra hệ thống điện",
@@ -35,5 +39,6 @@ export const repairRequests: RepairRequest[] = [
     status: 2, // 1: In progress
     apartmentRoom: "707",
     requestedDate: "10/10/2024",
+    isCustomerPaying: true,
   },
 ];

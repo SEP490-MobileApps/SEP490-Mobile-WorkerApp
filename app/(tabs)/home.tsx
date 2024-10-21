@@ -3,9 +3,8 @@ import {
   FilterModal,
   FilterModalProps,
 } from "@/components/Filter";
-import RequestCard from "@/components/RequestCard";
-import { COMPLETED, IN_PROGRESS } from "@/constants/RepairRequestStatus";
-import { repairRequests } from "@/dummies/DummyRequests";
+import RequestCard, { COMPLETED, IN_PROGRESS } from "@/components/RequestCard";
+import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
 import { useFocusEffect } from "expo-router";
 import { ScrollView, Text, VStack } from "native-base";
 import { useCallback, useRef } from "react";
@@ -29,21 +28,21 @@ export default function HomeScreen() {
       </View>
       <View style={styles.newRequestContainer}>
         <Text style={styles.title}>Yêu cầu mới</Text>
-        <NewRequest />
+        <NewRequests />
       </View>
       <View style={styles.completedRequestContainer}>
         <Text style={styles.title}>Đã hoàn thành</Text>
-        <CompletedRequest />
+        <CompletedRequests />
       </View>
     </View>
   );
 }
 
-function NewRequest() {
+function NewRequests() {
   return (
     <ScrollView w="100%">
       <VStack w="100%">
-        {repairRequests.map((request, key) => {
+        {REPAIR_REQUESTS.map((request, key) => {
           if (request.status === IN_PROGRESS)
             return <RequestCard request={request} key={key} />;
         })}
@@ -51,11 +50,11 @@ function NewRequest() {
     </ScrollView>
   );
 }
-function CompletedRequest() {
+function CompletedRequests() {
   return (
     <ScrollView w="100%">
       <VStack w="100%">
-        {repairRequests.map((request, key) => {
+        {REPAIR_REQUESTS.map((request, key) => {
           if (request.status === COMPLETED)
             return <RequestCard request={request} key={key} />;
         })}
@@ -74,6 +73,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    alignSelf: "center",
   },
   filter: {
     flex: 1,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     flex: 6,
   },
   completedRequestContainer: {
-    marginTop: 30,
+    marginTop: 12,
     flex: 4,
   },
 });

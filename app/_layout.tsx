@@ -1,12 +1,12 @@
+import Colors from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { NativeBaseProvider } from "native-base";
-import { useEffect } from "react";
+import { Icon, IconButton, NativeBaseProvider } from "native-base";
+import { ReactNode, useEffect } from "react";
 import "react-native-reanimated";
-
-import { useColorScheme } from "@/components/deprecated/useColorScheme";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,14 +46,38 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
+  const toPreviousPage = () => {
+    router.back();
+  };
+  const backButton = (): ReactNode => {
+    return (
+      <IconButton
+        size="lg"
+        icon={<Icon as={Ionicons} name="arrow-back-outline" />}
+        colorScheme="primary"
+        onPress={toPreviousPage}
+      />
+    );
+  };
   return (
     <>
       <NativeBaseProvider>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen
+            name="requestDetails"
+            options={{
+              title: "Chi tiết yêu cầu",
+              headerTitleStyle: {
+                color: "white",
+              },
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: Colors.ewmh.background,
+              },
+              headerLeft: () => backButton(),
+            }}
+          />
         </Stack>
       </NativeBaseProvider>
     </>
