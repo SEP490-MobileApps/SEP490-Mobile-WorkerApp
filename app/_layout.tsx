@@ -1,21 +1,21 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/components/useColorScheme';
+import Colors from "@/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useFonts } from "expo-font";
+import { router, Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { Icon, IconButton, NativeBaseProvider } from "native-base";
+import { ReactNode, useEffect } from "react";
+import "react-native-reanimated";
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from "expo-router";
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: "(tabs)",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -23,7 +23,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
 
@@ -46,14 +46,40 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
-
+  const toPreviousPage = () => {
+    router.back();
+  };
+  const backButton = (): ReactNode => {
+    return (
+      <IconButton
+        size="lg"
+        icon={<Icon as={Ionicons} name="arrow-back-outline" />}
+        colorScheme="primary"
+        onPress={toPreviousPage}
+      />
+    );
+  };
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
-    </ThemeProvider>
+    <>
+      <NativeBaseProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="requestDetails"
+            options={{
+              title: "Chi tiết yêu cầu",
+              headerTitleStyle: {
+                color: "white",
+              },
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: Colors.ewmh.background,
+              },
+              headerLeft: () => backButton(),
+            }}
+          />
+        </Stack>
+      </NativeBaseProvider>
+    </>
   );
 }
