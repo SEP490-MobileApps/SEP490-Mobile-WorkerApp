@@ -1,9 +1,10 @@
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { Button, FormControl, Icon, Input, Modal } from "native-base";
-import React, { useState } from "react";
+import { Button, Icon, Modal, VStack } from "native-base";
+import React, { useImperativeHandle, useState } from "react";
 import { StyleSheet } from "react-native";
+import LabeledDatePicker from "./LabeledDatePicker";
 interface FilterButtonProps {
   onPress: () => void;
 }
@@ -20,12 +21,13 @@ export function FilterButton({ onPress }: FilterButtonProps) {
   );
 }
 
-interface FilterModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface FilterModalProps {
+  showModal: () => void;
 }
-export function FilterModal({ isOpen, onClose }: FilterModalProps) {
+export const FilterModal = React.forwardRef((props, ref) => {
+  const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState(new Date());
+
   const onChange = (
     event: DateTimePickerEvent,
     selectedDate: Date | undefined
@@ -33,55 +35,45 @@ export function FilterModal({ isOpen, onClose }: FilterModalProps) {
     const currentDate = selectedDate || date;
     setDate(currentDate);
   };
-  const [modalVisible, setModalVisible] = React.useState(false);
+
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+  useImperativeHandle(ref, () => ({
+    showModal: () => {
+      setIsOpen(true);
+    },
+  }));
   return (
     <>
       <Modal
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={() => setIsOpen(false)}
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
       >
         <Modal.Content>
           <Modal.CloseButton />
-          <Modal.Header>Contact Us</Modal.Header>
+          <Modal.Header>Lọc theo ngày</Modal.Header>
           <Modal.Body>
-            <FormControl>
-              <FormControl.Label>Name</FormControl.Label>
-              <Input ref={initialRef} />
-            </FormControl>
-            <FormControl mt="3">
-              <FormControl.Label>Email</FormControl.Label>
-              <Input />
-            </FormControl>
+            <VStack style={styles.datePicker}>
+              <LabeledDatePicker label="Ngày bắt đầu" />
+              <LabeledDatePicker label="Ngày kết thúc" />
+            </VStack>
           </Modal.Body>
           <Modal.Footer>
-            <Button.Group space={2}>
-              <Button
-                variant="ghost"
-                colorScheme="blueGray"
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                onPress={() => {
-                  setModalVisible(false);
-                }}
-              >
-                Save
-              </Button>
-            </Button.Group>
+            <Button
+              onPress={() => {
+                setIsOpen(false);
+              }}
+            >
+              Chấp nhận
+            </Button>
           </Modal.Footer>
         </Modal.Content>
       </Modal>
     </>
   );
-}
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -92,7 +84,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 10,
   },
-  actionSheet: {
+  datePicker: {
     backgroundColor: "transparent",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
   },
 });

@@ -18,6 +18,7 @@ export default {
   }  ,
   ewmh: {
     background: '#3F72AF',    
+    foreground:'#FFFFFF',
     repairRequestStatus: {
       inProgress: '#F7B267',
       completed: '#4CAF50',
