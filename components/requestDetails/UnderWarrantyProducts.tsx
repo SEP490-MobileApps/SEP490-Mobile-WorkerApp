@@ -1,6 +1,6 @@
 import Colors from "@/constants/Colors";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { Modal } from "native-base";
+import { Modal, Text } from "native-base";
 import React, { useImperativeHandle, useState } from "react";
 
 export interface UnderWarrantyProductProps {
@@ -34,9 +34,11 @@ export const UnderWarrantyProducts = React.forwardRef((props, ref) => {
         finalFocusRef={finalRef}
       >
         <Modal.Content>
-          <Modal.CloseButton />
+          <Modal.CloseButton color={Colors.ewmh.foreground} />
           <Modal.Header backgroundColor={Colors.ewmh.background}>
-            Sản phẩm còn bảo hành
+            <Text color={Colors.ewmh.foreground} fontWeight="bold">
+              Sản phẩm còn bảo hành
+            </Text>
           </Modal.Header>
           <Modal.Body>
             {/* <VStack style={styles.datePicker}>

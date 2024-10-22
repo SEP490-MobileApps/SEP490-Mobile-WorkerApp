@@ -21,7 +21,7 @@ export default function ProductList() {
 const styles = StyleSheet.create({
   list: {
     width: "100%",
-    height: SCREEN_HEIGHT * 0.75,
+    height: SCREEN_HEIGHT * 0.8,
     flexGrow: 0,
   },
 });

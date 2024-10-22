@@ -1,6 +1,7 @@
 import Colors from "@/constants/Colors";
 import { SCREEN_HEIGHT } from "@/constants/Device";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { Button, Icon, Text, VStack } from "native-base";
 import { useRef } from "react";
 import { StyleSheet } from "react-native";
@@ -14,12 +15,16 @@ export default function OrdersButtonGroup() {
   const showModal = () => {
     warrantyProductRef.current?.showModal();
   };
+  const goToProductList = () => {
+    router.push("/products");
+  };
   return (
     <VStack space={3}>
       <Button
         style={styles.orderButtons}
         leftIcon={<Icon as={Ionicons} name="add-circle-outline" />}
         size="sm"
+        onPress={goToProductList}
       >
         <Text fontWeight="bold" style={styles.orderButtonText} fontSize="sm">
           Thêm sản phẩm

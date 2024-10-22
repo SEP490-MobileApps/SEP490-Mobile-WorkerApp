@@ -78,6 +78,20 @@ function RootLayoutNav() {
               headerLeft: () => backButton(),
             }}
           />
+          <Stack.Screen
+            name="products"
+            options={{
+              title: "Vật tư điện nước",
+              headerTitleStyle: {
+                color: "white",
+              },
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: Colors.ewmh.background,
+              },
+              headerLeft: () => backButton(),
+            }}
+          />
         </Stack>
       </NativeBaseProvider>
     </>
