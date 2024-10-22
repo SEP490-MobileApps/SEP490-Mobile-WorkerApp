@@ -1,4 +1,4 @@
-import { Box } from "native-base";
+import { Text } from "native-base";
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
@@ -11,10 +11,24 @@ type RepairRequestStatus = {
   color: string;
   textColor: string;
 };
-
+const repairRequestStatuses: RepairRequestStatus[] = [
+  {
+    key: IN_PROGRESS,
+    value: "Đang thực hiện",
+    color: Colors.ewmh.requestStatus.inProgress,
+    textColor: Colors.ewmh.requestStatus.inProgressText,
+  },
+  {
+    key: COMPLETED,
+    value: "Đã hoàn thành",
+    color: Colors.ewmh.requestStatus.completed,
+    textColor: Colors.ewmh.requestStatus.completedText,
+  },
+];
 interface RequestStatusIndicatorProps {
   status: number;
 }
+
 export default function RequestStatusIndicator({
   status,
 }: RequestStatusIndicatorProps) {
@@ -34,9 +48,9 @@ export default function RequestStatusIndicator({
   };
   return (
     <>
-      {statusBoxValue ? (
+      {/* {statusBoxValue ? (
         <Box>
-          {/* <Box
+          <Box
             style={styles.container}
             alignSelf="center"
             _text={{
@@ -48,10 +62,12 @@ export default function RequestStatusIndicator({
             bg={statusBoxValue?.color}
           >
             <Text>{statusBoxValue?.value}</Text>
-          </Box> */}
+            
+          </Box>
         </Box>
       ) : null}
-      ;
+      ; */}
+      <Text>Lmao</Text>
     </>
   );
 }
@@ -64,18 +80,3 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
-
-const repairRequestStatuses: RepairRequestStatus[] = [
-  {
-    key: IN_PROGRESS,
-    value: "Đang thực hiện",
-    color: Colors.ewmh.requestStatus.inProgress,
-    textColor: Colors.ewmh.requestStatus.inProgressText,
-  },
-  {
-    key: COMPLETED,
-    value: "Đã hoàn thành",
-    color: Colors.ewmh.requestStatus.completed,
-    textColor: Colors.ewmh.requestStatus.completedText,
-  },
-];

@@ -1,6 +1,7 @@
-import CustomerInformation from "@/components/CustomerInformation";
-import CustomerPayingIndicator from "@/components/CustomerPayingIndicator";
-import WorkerHorizontalList from "@/components/WorkerHorizontalList";
+import CustomerInformation from "@/components/requestDetails/CustomerInformation";
+import CustomerPayingIndicator from "@/components/requestDetails/CustomerPayingIndicator";
+import OrdersButtonGroup from "@/components/requestDetails/OrdersButtonGroup";
+import WorkerHorizontalList from "@/components/requestDetails/WorkerHorizontalList";
 import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
 import { RepairRequest } from "@/models/RepairRequest";
 import { Divider, ScrollView, Text, VStack } from "native-base";
@@ -18,6 +19,7 @@ export default function RequestDetails({ requestId }: RequestDetailsProps) {
         <RequestDetail request={request} />
         <CustomerDetail />
         <WorkersSection />
+        <OrdersSection />
       </VStack>
     </ScrollView>
   );
@@ -60,6 +62,14 @@ function WorkersSection() {
     <View style={styles.detailBlock}>
       <Text style={styles.title}>Danh sách nhân viên</Text>
       <WorkerHorizontalList />
+    </View>
+  );
+}
+function OrdersSection() {
+  return (
+    <View style={styles.detailBlock}>
+      <Text style={styles.title}>Đơn hàng đính kèm</Text>
+      <OrdersButtonGroup />
     </View>
   );
 }

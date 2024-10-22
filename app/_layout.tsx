@@ -54,7 +54,7 @@ function RootLayoutNav() {
       <IconButton
         size="lg"
         icon={<Icon as={Ionicons} name="arrow-back-outline" />}
-        colorScheme="primary"
+        color={Colors.ewmh.foreground}
         onPress={toPreviousPage}
       />
     );

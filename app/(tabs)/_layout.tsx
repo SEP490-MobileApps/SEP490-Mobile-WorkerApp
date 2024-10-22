@@ -1,9 +1,8 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { useClientOnlyValue } from "@/components/deprecated/useClientOnlyValue";
-import { useColorScheme } from "@/components/deprecated/useColorScheme";
 import Colors from "@/constants/Colors";
 
 function TabBarIcon(props: {
@@ -14,12 +13,24 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const getScreenOptions = (icon: ReactNode, title: string) => {
+    //   return {
+    //     title: "Yêu cầu sửa chữa",
+    //     headerTitleStyle: {
+    //       color: "white",
+    //     },
+    //     headerTitleAlign: "center",
+    //     headerStyle: {
+    //       backgroundColor: Colors.ewmh.background,
+    //     },
+    //     tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+    //   };
+  };
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: Colors.ewmh.background,
         headerShown: useClientOnlyValue(false, true),
       }}
     >
@@ -27,6 +38,7 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Yêu cầu sửa chữa",
+
           headerTitleStyle: {
             color: "white",
           },
@@ -34,13 +46,24 @@ export default function TabLayout() {
           headerStyle: {
             backgroundColor: Colors.ewmh.background,
           },
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarShowLabel: false,
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="products"
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Vật tư điện nước ",
+
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: Colors.ewmh.background,
+          },
+          tabBarIcon: ({ color }) => <TabBarIcon name="wrench" color={color} />,
+          tabBarShowLabel: false,
         }}
       />
     </Tabs>
