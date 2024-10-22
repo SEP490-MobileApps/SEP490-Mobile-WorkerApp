@@ -1,9 +1,8 @@
-import { Text } from "native-base";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Colors from "@/constants/Colors";
-import { COMPLETED, IN_PROGRESS } from "./RequestCard";
+import { Box } from "native-base";
 
 type RepairRequestStatus = {
   key: number;
@@ -11,6 +10,9 @@ type RepairRequestStatus = {
   color: string;
   textColor: string;
 };
+export const IN_PROGRESS = 1;
+export const COMPLETED = 2;
+
 const repairRequestStatuses: RepairRequestStatus[] = [
   {
     key: IN_PROGRESS,
@@ -32,9 +34,7 @@ interface RequestStatusIndicatorProps {
 export default function RequestStatusIndicator({
   status,
 }: RequestStatusIndicatorProps) {
-  const [statusBoxValue, setStatusBoxValue] = useState<RepairRequestStatus>(
-    repairRequestStatuses[0]
-  );
+  const [statusBoxValue, setStatusBoxValue] = useState<RepairRequestStatus>();
   useEffect(() => {
     const selectedStatus = getSelectedStatus();
     setStatusBoxValue(selectedStatus);
@@ -47,8 +47,8 @@ export default function RequestStatusIndicator({
     return result[0];
   };
   return (
-    <>
-      {/* {statusBoxValue ? (
+    <View>
+      {statusBoxValue === undefined ? null : (
         <Box>
           <Box
             style={styles.container}
@@ -61,14 +61,11 @@ export default function RequestStatusIndicator({
             }}
             bg={statusBoxValue?.color}
           >
-            <Text>{statusBoxValue?.value}</Text>
-            
+            {statusBoxValue?.value}
           </Box>
         </Box>
-      ) : null}
-      ; */}
-      <Text>Lmao</Text>
-    </>
+      )}
+    </View>
   );
 }
 
