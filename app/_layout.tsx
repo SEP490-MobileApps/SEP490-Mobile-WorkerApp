@@ -54,7 +54,7 @@ function RootLayoutNav() {
       <IconButton
         size="lg"
         icon={<Icon as={Ionicons} name="arrow-back-outline" />}
-        colorScheme="primary"
+        color={Colors.ewmh.foreground}
         onPress={toPreviousPage}
       />
     );
@@ -68,6 +68,34 @@ function RootLayoutNav() {
             name="requestDetails"
             options={{
               title: "Chi tiết yêu cầu",
+              headerTitleStyle: {
+                color: "white",
+              },
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: Colors.ewmh.background,
+              },
+              headerLeft: () => backButton(),
+            }}
+          />
+          <Stack.Screen
+            name="products"
+            options={{
+              title: "Vật tư điện nước",
+              headerTitleStyle: {
+                color: "white",
+              },
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: Colors.ewmh.background,
+              },
+              headerLeft: () => backButton(),
+            }}
+          />
+          <Stack.Screen
+            name="productDetails"
+            options={{
+              title: "Chi tiết sản phẩm",
               headerTitleStyle: {
                 color: "white",
               },

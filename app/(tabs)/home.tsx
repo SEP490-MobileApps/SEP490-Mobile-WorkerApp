@@ -2,8 +2,12 @@ import {
   FilterButton,
   FilterModal,
   FilterModalProps,
-} from "@/components/Filter";
-import RequestCard, { COMPLETED, IN_PROGRESS } from "@/components/RequestCard";
+} from "@/components/home/Filter";
+import RequestCard from "@/components/home/RequestCard";
+import {
+  COMPLETED,
+  IN_PROGRESS,
+} from "@/components/home/RequestStatusIndicator";
 import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
 import { useFocusEffect } from "expo-router";
 import { ScrollView, Text, VStack } from "native-base";

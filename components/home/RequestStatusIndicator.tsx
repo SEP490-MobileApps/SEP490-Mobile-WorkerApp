@@ -1,9 +1,8 @@
-import { Box } from "native-base";
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Colors from "@/constants/Colors";
-import { COMPLETED, IN_PROGRESS } from "./RequestCard";
+import { Box } from "native-base";
 
 type RepairRequestStatus = {
   key: number;
@@ -11,59 +10,8 @@ type RepairRequestStatus = {
   color: string;
   textColor: string;
 };
-
-interface RequestStatusIndicatorProps {
-  status: number;
-}
-export default function RequestStatusIndicator({
-  status,
-}: RequestStatusIndicatorProps) {
-  const [statusBoxValue, setStatusBoxValue] = useState<RepairRequestStatus>(
-    repairRequestStatuses[0]
-  );
-  useEffect(() => {
-    const selectedStatus = getSelectedStatus();
-    setStatusBoxValue(selectedStatus);
-  }, []);
-
-  const getSelectedStatus = () => {
-    var result = repairRequestStatuses.filter((reqStatus) => {
-      return reqStatus.key === status;
-    });
-    return result[0];
-  };
-  return (
-    <>
-      {statusBoxValue ? (
-        <Box>
-          {/* <Box
-            style={styles.container}
-            alignSelf="center"
-            _text={{
-              fontSize: "md",
-              fontWeight: "extrabold",
-              color: statusBoxValue?.textColor,
-              letterSpacing: "lg",
-            }}
-            bg={statusBoxValue?.color}
-          >
-            <Text>{statusBoxValue?.value}</Text>
-          </Box> */}
-        </Box>
-      ) : null}
-      ;
-    </>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 10,
-    flexDirection: "row",
-    padding: 5,
-    borderRadius: 10,
-  },
-});
+export const IN_PROGRESS = 1;
+export const COMPLETED = 2;
 
 const repairRequestStatuses: RepairRequestStatus[] = [
   {
@@ -79,3 +27,53 @@ const repairRequestStatuses: RepairRequestStatus[] = [
     textColor: Colors.ewmh.requestStatus.completedText,
   },
 ];
+interface RequestStatusIndicatorProps {
+  status: number;
+}
+
+export default function RequestStatusIndicator({
+  status,
+}: RequestStatusIndicatorProps) {
+  const [statusBoxValue, setStatusBoxValue] = useState<RepairRequestStatus>();
+  useEffect(() => {
+    const selectedStatus = getSelectedStatus();
+    setStatusBoxValue(selectedStatus);
+  }, []);
+
+  const getSelectedStatus = () => {
+    var result = repairRequestStatuses.filter((reqStatus) => {
+      return reqStatus.key === status;
+    });
+    return result[0];
+  };
+  return (
+    <View>
+      {statusBoxValue === undefined ? null : (
+        <Box>
+          <Box
+            style={styles.container}
+            alignSelf="center"
+            _text={{
+              fontSize: "md",
+              fontWeight: "extrabold",
+              color: statusBoxValue?.textColor,
+              letterSpacing: "lg",
+            }}
+            bg={statusBoxValue?.color}
+          >
+            {statusBoxValue?.value}
+          </Box>
+        </Box>
+      )}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    flexDirection: "row",
+    padding: 5,
+    borderRadius: 10,
+  },
+});

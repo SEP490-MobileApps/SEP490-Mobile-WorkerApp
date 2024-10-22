@@ -45,8 +45,6 @@ export default function RequestCard({ request }: RequestCardProps) {
   );
 }
 
-export const IN_PROGRESS = 1;
-export const COMPLETED = 2;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
