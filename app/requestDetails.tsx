@@ -1,18 +1,23 @@
 import CustomerInformation from "@/components/requestDetails/CustomerInformation";
 import CustomerPayingIndicator from "@/components/requestDetails/CustomerPayingIndicator";
 import OrdersButtonGroup from "@/components/requestDetails/OrdersButtonGroup";
+import RequestStatusActionSheet from "@/components/requestDetails/RequestStatusActionSheet";
 import WorkerHorizontalList from "@/components/requestDetails/WorkerHorizontalList";
 import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
+import { useRequestStatusContext } from "@/hooks/HeaderBarProvider";
 import { RepairRequest } from "@/models/RepairRequest";
 import { Divider, ScrollView, Text, VStack } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-interface RequestDetailsProps {
+export interface RequestDetailsProps {
   requestId: string;
+  openActionSheet: () => void;
 }
 export default function RequestDetails({ requestId }: RequestDetailsProps) {
+  const { isShown, show, hide } = useRequestStatusContext();
   const [request, setRequest] = useState(REPAIR_REQUESTS[0]);
+
   return (
     <ScrollView>
       <VStack style={styles.container}>
@@ -20,6 +25,7 @@ export default function RequestDetails({ requestId }: RequestDetailsProps) {
         <CustomerDetail />
         <WorkersSection />
         <OrdersSection />
+        <RequestStatusActionSheet isOpen={isShown} closeActionSheet={hide} />
       </VStack>
     </ScrollView>
   );

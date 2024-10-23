@@ -8,6 +8,11 @@ import { Icon, IconButton, NativeBaseProvider } from "native-base";
 import { ReactNode, useEffect } from "react";
 import "react-native-reanimated";
 
+import {
+  HeaderBarProvider,
+  useHeaderBarContext,
+} from "../hooks/HeaderBarProvider";
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -27,7 +32,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -42,7 +46,13 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <HeaderBarProvider>
+      <NativeBaseProvider>
+        <RootLayoutNav />
+      </NativeBaseProvider>
+    </HeaderBarProvider>
+  );
 }
 
 function RootLayoutNav() {
@@ -59,55 +69,67 @@ function RootLayoutNav() {
       />
     );
   };
+  const { isShown, show, hide } = useHeaderBarContext();
+  const toggleRequestStatusActionSheet = () => {
+    if (isShown) hide();
+    else show();
+  };
+  const openRequestStatusModalButton = (): ReactNode => {
+    return (
+      <IconButton
+        size="lg"
+        icon={<Icon as={Ionicons} name="alert-circle-outline" />}
+        color={Colors.ewmh.foreground}
+        onPress={toggleRequestStatusActionSheet}
+      />
+    );
+  };
   return (
-    <>
-      <NativeBaseProvider>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="requestDetails"
-            options={{
-              title: "Chi tiết yêu cầu",
-              headerTitleStyle: {
-                color: "white",
-              },
-              headerTitleAlign: "center",
-              headerStyle: {
-                backgroundColor: Colors.ewmh.background,
-              },
-              headerLeft: () => backButton(),
-            }}
-          />
-          <Stack.Screen
-            name="products"
-            options={{
-              title: "Vật tư điện nước",
-              headerTitleStyle: {
-                color: "white",
-              },
-              headerTitleAlign: "center",
-              headerStyle: {
-                backgroundColor: Colors.ewmh.background,
-              },
-              headerLeft: () => backButton(),
-            }}
-          />
-          <Stack.Screen
-            name="productDetails"
-            options={{
-              title: "Chi tiết sản phẩm",
-              headerTitleStyle: {
-                color: "white",
-              },
-              headerTitleAlign: "center",
-              headerStyle: {
-                backgroundColor: Colors.ewmh.background,
-              },
-              headerLeft: () => backButton(),
-            }}
-          />
-        </Stack>
-      </NativeBaseProvider>
-    </>
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="requestDetails"
+        options={{
+          title: "Chi tiết yêu cầu",
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: Colors.ewmh.background,
+          },
+          headerLeft: () => backButton(),
+          headerRight: () => openRequestStatusModalButton(),
+        }}
+      />
+      <Stack.Screen
+        name="products"
+        options={{
+          title: "Vật tư điện nước",
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: Colors.ewmh.background,
+          },
+          headerLeft: () => backButton(),
+        }}
+      />
+      <Stack.Screen
+        name="productDetails"
+        options={{
+          title: "Chi tiết sản phẩm",
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: Colors.ewmh.background,
+          },
+          headerLeft: () => backButton(),
+        }}
+      />
+    </Stack>
   );
 }

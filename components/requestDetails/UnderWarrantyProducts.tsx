@@ -1,7 +1,9 @@
 import Colors from "@/constants/Colors";
+import { PRODUCTS } from "@/dummies/DummyProducts";
 import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { Modal, Text } from "native-base";
+import { Modal, ScrollView, Text } from "native-base";
 import React, { useImperativeHandle, useState } from "react";
+import UnderWarrantyProductCard from "./UnderWarrantyProductCard";
 
 export interface UnderWarrantyProductProps {
   showModal: () => void;
@@ -44,6 +46,11 @@ export const UnderWarrantyProducts = React.forwardRef((props, ref) => {
             {/* <VStack style={styles.datePicker}>
                           
             </VStack> */}
+            <ScrollView h="95%">
+              {PRODUCTS.map((product, key) => {
+                return <UnderWarrantyProductCard product={product} key={key} />;
+              })}
+            </ScrollView>
           </Modal.Body>
         </Modal.Content>
       </Modal>
