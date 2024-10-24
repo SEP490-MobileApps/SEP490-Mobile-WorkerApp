@@ -20,7 +20,8 @@ export default {
     background: '#3F72AF',    
     background2: '#DBE2EF',
     background3:'#FFFFFF',
-    foreground:'#FFFFFF',
+    foreground: '#FFFFFF',
+    foreground2:'#000034',    
     requestStatus: {
       inProgress: '#F7B267',
       completed: '#4CAF50',

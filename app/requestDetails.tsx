@@ -1,18 +1,26 @@
 import CustomerInformation from "@/components/requestDetails/CustomerInformation";
 import CustomerPayingIndicator from "@/components/requestDetails/CustomerPayingIndicator";
 import OrdersButtonGroup from "@/components/requestDetails/OrdersButtonGroup";
+import RequestStatusActionSheet from "@/components/requestDetails/RequestStatusActionSheet";
 import WorkerHorizontalList from "@/components/requestDetails/WorkerHorizontalList";
+import Colors from "@/constants/Colors";
+import { SCREEN_HEIGHT } from "@/constants/Device";
 import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
+import { useHeaderBarContext } from "@/hooks/HeaderBarProvider";
 import { RepairRequest } from "@/models/RepairRequest";
-import { Divider, ScrollView, Text, VStack } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+import { Button, Divider, Icon, ScrollView, Text, VStack } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
-interface RequestDetailsProps {
+export interface RequestDetailsProps {
   requestId: string;
+  openActionSheet: () => void;
 }
 export default function RequestDetails({ requestId }: RequestDetailsProps) {
+  const { isRequestStatusShown, hideRequestStatus } = useHeaderBarContext();
   const [request, setRequest] = useState(REPAIR_REQUESTS[0]);
+
   return (
     <ScrollView>
       <VStack style={styles.container}>
@@ -20,6 +28,11 @@ export default function RequestDetails({ requestId }: RequestDetailsProps) {
         <CustomerDetail />
         <WorkersSection />
         <OrdersSection />
+        <CheckoutSection />
+        <RequestStatusActionSheet
+          isOpen={isRequestStatusShown}
+          closeActionSheet={hideRequestStatus}
+        />
       </VStack>
     </ScrollView>
   );
@@ -69,8 +82,24 @@ function OrdersSection() {
   return (
     <View style={styles.detailBlock}>
       <Text style={styles.title}>Đơn hàng đính kèm</Text>
+      {/* {PRODUCTS ? <OrderList /> : <OrdersButtonGroup />} */}
       <OrdersButtonGroup />
     </View>
+  );
+}
+function CheckoutSection() {
+  const goToCheckoutScreen = () => {};
+  return (
+    <Button
+      style={styles.checkoutButton}
+      leftIcon={<Icon as={Ionicons} name="card-outline" />}
+      size="sm"
+      onPress={goToCheckoutScreen}
+    >
+      <Text fontWeight="bold" style={styles.orderButtonText} fontSize="sm">
+        Thanh toán
+      </Text>
+    </Button>
   );
 }
 const styles = StyleSheet.create({
@@ -88,7 +117,18 @@ const styles = StyleSheet.create({
     marginTop: 2,
     flexDirection: "column",
   },
-
+  checkoutButton: {
+    flexDirection: "row",
+    backgroundColor: Colors.ewmh.background,
+    height: SCREEN_HEIGHT * 0.05,
+    alignSelf: "center",
+    justifyContent: "center",
+    width: "100%",
+    marginVertical: 10,
+  },
+  orderButtonText: {
+    color: Colors.ewmh.foreground,
+  },
   informationView: {
     width: "100%",
     flexDirection: "row",

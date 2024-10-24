@@ -1,9 +1,10 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import React, { ReactNode } from "react";
 
 import { useClientOnlyValue } from "@/components/deprecated/useClientOnlyValue";
 import Colors from "@/constants/Colors";
+import { useHeaderBarContext } from "@/hooks/HeaderBarProvider";
 import { Ionicons } from "@expo/vector-icons";
 import { Icon, IconButton } from "native-base";
 
@@ -15,29 +16,21 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const getScreenOptions = (icon: ReactNode, title: string) => {
-    //   return {
-    //     title: "Yêu cầu sửa chữa",
-    //     headerTitleStyle: {
-    //       color: "white",
-    //     },
-    //     headerTitleAlign: "center",
-    //     headerStyle: {
-    //       backgroundColor: Colors.ewmh.background,
-    //     },
-    //     tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-    //   };
+  const { isRequestFilterShown, showRequestFilter, hideRequestFilter } =
+    useHeaderBarContext();
+
+  const toggleRequestFiter = () => {
+    if (isRequestFilterShown) hideRequestFilter();
+    else showRequestFilter();
   };
-  const toPreviousPage = () => {
-    router.back();
-  };
-  const backButton = (): ReactNode => {
+  const openRequestFilterButton = (): ReactNode => {
     return (
       <IconButton
         size="lg"
-        icon={<Icon as={Ionicons} name="arrow-back-outline" />}
+        icon={<Icon as={Ionicons} name="filter-outline" />}
+        _icon={{ color: Colors.ewmh.foreground }}
         color={Colors.ewmh.foreground}
-        onPress={toPreviousPage}
+        onPress={toggleRequestFiter}
       />
     );
   };
@@ -62,9 +55,9 @@ export default function TabLayout() {
           },
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
           tabBarShowLabel: false,
+          headerRight: () => openRequestFilterButton(),
         }}
       />
-     
     </Tabs>
   );
 }
