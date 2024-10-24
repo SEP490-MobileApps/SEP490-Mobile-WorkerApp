@@ -1,24 +1,21 @@
-import {
-  FilterButton,
-  FilterModal,
-  FilterModalProps,
-} from "@/components/home/Filter";
+import FilterModal, { FilterModalProps } from "@/components/home/Filter";
 import RequestCard from "@/components/home/RequestCard";
 import {
   COMPLETED,
   IN_PROGRESS,
 } from "@/components/home/RequestStatusIndicator";
 import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
+import { useHeaderBarContext } from "@/hooks/HeaderBarProvider";
 import { useFocusEffect } from "expo-router";
 import { ScrollView, Text, VStack } from "native-base";
 import { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 export default function HomeScreen() {
-  // const [showModal, setShowModal] = useState(false);
+  const { isRequestFilterShown, hideRequestFilter } = useHeaderBarContext();
   const filterRef = useRef<FilterModalProps>(null);
-  const showModal = () => {
-    filterRef.current?.showModal();
-  };
+  // const showModal = () => {
+  //   filterRef.current?.showModal();
+  // };
   useFocusEffect(
     useCallback(() => {
       console.log("Hello World!");
@@ -26,10 +23,6 @@ export default function HomeScreen() {
   );
   return (
     <View style={styles.container}>
-      <View style={styles.filter}>
-        <FilterButton onPress={showModal} />
-        <FilterModal ref={filterRef} />
-      </View>
       <View style={styles.newRequestContainer}>
         <Text style={styles.title}>Yêu cầu mới</Text>
         <NewRequests />
@@ -38,6 +31,7 @@ export default function HomeScreen() {
         <Text style={styles.title}>Đã hoàn thành</Text>
         <CompletedRequests />
       </View>
+      <FilterModal isOpen={isRequestFilterShown} onClose={hideRequestFilter} />
     </View>
   );
 }
@@ -84,7 +78,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   newRequestContainer: {
-    flex: 6,
+    flex: 7,
   },
   completedRequestContainer: {
     marginTop: 12,

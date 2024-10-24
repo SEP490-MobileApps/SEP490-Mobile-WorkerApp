@@ -1,8 +1,7 @@
 import Colors from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
-import { Button, Icon, Modal, VStack } from "native-base";
-import React, { useImperativeHandle, useState } from "react";
+import { Button, Icon, Modal, Text, VStack } from "native-base";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import LabeledDatePicker from "./LabeledDatePicker";
 interface FilterButtonProps {
@@ -22,38 +21,32 @@ export function FilterButton({ onPress }: FilterButtonProps) {
 }
 
 export interface FilterModalProps {
-  showModal: () => void;
+  isOpen: boolean;
+  onClose: () => void;
 }
-export const FilterModal = React.forwardRef((props, ref) => {
-  const [isOpen, setIsOpen] = useState(false);
+export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
   const [date, setDate] = useState(new Date());
 
-  const onChange = (
-    event: DateTimePickerEvent,
-    selectedDate: Date | undefined
-  ) => {
-    const currentDate = selectedDate || date;
-    setDate(currentDate);
+  const startFilter = () => {
+    onClose();
   };
-
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
-  useImperativeHandle(ref, () => ({
-    showModal: () => {
-      setIsOpen(true);
-    },
-  }));
   return (
     <>
       <Modal
         isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
+        onClose={onClose}
         initialFocusRef={initialRef}
         finalFocusRef={finalRef}
       >
         <Modal.Content>
           <Modal.CloseButton />
-          <Modal.Header>Lọc theo ngày</Modal.Header>
+          <Modal.Header backgroundColor={Colors.ewmh.background}>
+            <Text color={Colors.ewmh.foreground} fontWeight="bold">
+              Lọc theo ngày
+            </Text>
+          </Modal.Header>
           <Modal.Body>
             <VStack style={styles.datePicker}>
               <LabeledDatePicker label="Ngày bắt đầu" />
@@ -61,26 +54,20 @@ export const FilterModal = React.forwardRef((props, ref) => {
             </VStack>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              onPress={() => {
-                setIsOpen(false);
-              }}
-            >
-              Chấp nhận
-            </Button>
+            <Button onPress={startFilter}>Chấp nhận</Button>
           </Modal.Footer>
         </Modal.Content>
       </Modal>
     </>
   );
-});
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
     alignItems: "center",
-    backgroundColor: Colors.ewmh.background,
+
     justifyContent: "center",
     marginBottom: 10,
   },

@@ -8,27 +8,47 @@ interface HeaderBarProviderProps {
 // Create the context with a default value
 const HeaderBarContext = createContext<
   | {
-      isShown: boolean;
-      show: () => void;
-      hide: () => void;
+      isRequestStatusShown: boolean;
+      isRequestFilterShown: boolean;
+
+      showRequestStatus: () => void;
+      hideRequestStatus: () => void;
+      showRequestFilter: () => void;
+      hideRequestFilter: () => void;
     }
   | undefined
 >(undefined);
 
 // Create a provider component
 export const HeaderBarProvider = ({ children }: HeaderBarProviderProps) => {
-  const [isShown, setIsShown] = useState(false);
+  const [isRequestStatusShown, setIsRequestStatusShown] = useState(false);
+  const [isRequestFilterShown, setIsRequestFilterShown] = useState(false);
 
-  const show = () => {
-    setIsShown(true);
+  const showRequestStatus = () => {
+    setIsRequestStatusShown(true);
   };
 
-  const hide = () => {
-    setIsShown(false);
+  const hideRequestStatus = () => {
+    setIsRequestStatusShown(false);
+  };
+  const showRequestFilter = () => {
+    setIsRequestFilterShown(true);
+  };
+  const hideRequestFilter = () => {
+    setIsRequestFilterShown(false);
   };
 
   return (
-    <HeaderBarContext.Provider value={{ isShown, show, hide }}>
+    <HeaderBarContext.Provider
+      value={{
+        isRequestStatusShown,
+        isRequestFilterShown,
+        showRequestStatus,
+        hideRequestStatus,
+        showRequestFilter,
+        hideRequestFilter,
+      }}
+    >
       {children}
     </HeaderBarContext.Provider>
   );

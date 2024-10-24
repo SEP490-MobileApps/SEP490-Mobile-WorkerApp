@@ -43,7 +43,7 @@ export default function LabeledDatePicker({ label }: DatePickerProps) {
           style={styles.dateTextInput}
           value={dateString}
           placeholder="Vui lòng chọn"
-          placeholderTextColor={Colors.ewmh.foreground}
+          placeholderTextColor={Colors.ewmh.foreground2}
           editable={false}
         />
       </Pressable>
@@ -74,8 +74,7 @@ const styles = StyleSheet.create({
   },
   dateTextInput: {
     borderWidth: 1,
-    backgroundColor: Colors.ewmh.background,
-    color: Colors.ewmh.foreground,
+    backgroundColor: Colors.ewmh.background2,
     padding: 5,
     borderRadius: 5,
     width: "100%",

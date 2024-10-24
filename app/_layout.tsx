@@ -64,21 +64,24 @@ function RootLayoutNav() {
       <IconButton
         size="lg"
         icon={<Icon as={Ionicons} name="arrow-back-outline" />}
+        _icon={{ color: Colors.ewmh.foreground }}
         color={Colors.ewmh.foreground}
         onPress={toPreviousPage}
       />
     );
   };
-  const { isShown, show, hide } = useHeaderBarContext();
+  const { isRequestStatusShown, showRequestStatus, hideRequestStatus } =
+    useHeaderBarContext();
   const toggleRequestStatusActionSheet = () => {
-    if (isShown) hide();
-    else show();
+    if (isRequestStatusShown) hideRequestStatus();
+    else showRequestStatus();
   };
   const openRequestStatusModalButton = (): ReactNode => {
     return (
       <IconButton
         size="lg"
         icon={<Icon as={Ionicons} name="alert-circle-outline" />}
+        _icon={{ color: Colors.ewmh.foreground }}
         color={Colors.ewmh.foreground}
         onPress={toggleRequestStatusActionSheet}
       />

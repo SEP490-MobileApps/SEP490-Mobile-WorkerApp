@@ -1,14 +1,23 @@
 import Colors from "@/constants/Colors";
 import { Product } from "@/models/Product";
-import { Box, HStack, Image, Text, VStack } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  Badge,
+  Box,
+  HStack,
+  Icon,
+  IconButton,
+  Image,
+  Text,
+  VStack,
+} from "native-base";
 import { StyleSheet } from "react-native";
+import { FormatPriceToVnd } from "../../utils/PriceUtils";
 
-interface UnderWarrantyProductCardProps {
+export interface OrderCardProps {
   product: Product;
 }
-export default function UnderWarrantyProductCard({
-  product,
-}: UnderWarrantyProductCardProps) {
+export default function OrderCard({ product }: OrderCardProps) {
   return (
     <Box>
       <HStack
@@ -34,14 +43,24 @@ export default function UnderWarrantyProductCard({
             {product.name}
           </Text>
           <Text fontSize="md" fontWeight="bold" color={Colors.ewmh.background}>
-            Còn 29 ngày
+            {FormatPriceToVnd(product.price)}
+          </Text>
+          <Badge colorScheme="info" variant="outline">
+            Số lượng: 2 cái
+          </Badge>
+          <Text fontSize="md" fontWeight="bold">
+            Lý do: Cần thay mới
           </Text>
         </VStack>
+        <IconButton
+          size="lg"
+          icon={<Icon as={Ionicons} name="ellipsis-vertical-outline" />}
+          color={Colors.ewmh.foreground}
+        />
       </HStack>
     </Box>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
