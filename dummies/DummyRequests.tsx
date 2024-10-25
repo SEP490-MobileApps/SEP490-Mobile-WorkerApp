@@ -4,7 +4,7 @@ export const REPAIR_REQUESTS: RepairRequest[] = [
   {
     name: "Sửa chữa ống nước",
     id: "a1b2-c3d4-e5f6-7890",
-    status: 1, // 0: New request
+    status: 0, // 0: New request
     apartmentRoom: "201",
     requestedDate: "06/09/2024",
     isCustomerPaying: false,
@@ -20,7 +20,7 @@ export const REPAIR_REQUESTS: RepairRequest[] = [
   {
     name: "Kiểm tra điện áp",
     id: "1234-5678-90ab-cdef",
-    status: 2, // 2: Completed
+    status: 0, // 2: Completed
     apartmentRoom: "502",
     requestedDate: "20/09/2024",
     isCustomerPaying: true,

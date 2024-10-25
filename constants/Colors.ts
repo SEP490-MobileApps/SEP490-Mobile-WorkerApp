@@ -23,8 +23,10 @@ export default {
     foreground: '#FFFFFF',
     foreground2:'#000034',    
     requestStatus: {
+      newRequest:'#DBE2EF',
       inProgress: '#F7B267',
       completed: '#4CAF50',
+      newRequestText:'#000034',
       inProgressText: '#000034',
       completedText: '#FFFFFF',
     }

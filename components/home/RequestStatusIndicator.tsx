@@ -10,10 +10,17 @@ type RepairRequestStatus = {
   color: string;
   textColor: string;
 };
+export const NEW_REQUEST = 0;
 export const IN_PROGRESS = 1;
 export const COMPLETED = 2;
 
 const repairRequestStatuses: RepairRequestStatus[] = [
+  {
+    key: NEW_REQUEST,
+    value: "Yêu cầu mới",
+    color: Colors.ewmh.requestStatus.newRequest,
+    textColor: Colors.ewmh.requestStatus.newRequestText,
+  },
   {
     key: IN_PROGRESS,
     value: "Đang thực hiện",

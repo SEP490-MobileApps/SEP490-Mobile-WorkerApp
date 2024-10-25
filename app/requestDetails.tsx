@@ -1,10 +1,12 @@
 import CustomerInformation from "@/components/requestDetails/CustomerInformation";
 import CustomerPayingIndicator from "@/components/requestDetails/CustomerPayingIndicator";
+import OrderList from "@/components/requestDetails/OrderList";
 import OrdersButtonGroup from "@/components/requestDetails/OrdersButtonGroup";
 import RequestStatusActionSheet from "@/components/requestDetails/RequestStatusActionSheet";
 import WorkerHorizontalList from "@/components/requestDetails/WorkerHorizontalList";
 import Colors from "@/constants/Colors";
 import { SCREEN_HEIGHT } from "@/constants/Device";
+import { PRODUCTS } from "@/dummies/DummyProducts";
 import { REPAIR_REQUESTS } from "@/dummies/DummyRequests";
 import { useHeaderBarContext } from "@/hooks/HeaderBarProvider";
 import { RepairRequest } from "@/models/RepairRequest";
@@ -82,8 +84,8 @@ function OrdersSection() {
   return (
     <View style={styles.detailBlock}>
       <Text style={styles.title}>Đơn hàng đính kèm</Text>
-      {/* {PRODUCTS ? <OrderList /> : <OrdersButtonGroup />} */}
-      <OrdersButtonGroup />
+      {PRODUCTS ? <OrderList /> : <OrdersButtonGroup />}
+      {/* <OrdersButtonGroup /> */}
     </View>
   );
 }

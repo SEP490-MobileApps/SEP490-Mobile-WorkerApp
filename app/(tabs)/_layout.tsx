@@ -58,6 +58,22 @@ export default function TabLayout() {
           headerRight: () => openRequestFilterButton(),
         }}
       />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Hồ sơ cá nhân",
+
+          headerTitleStyle: {
+            color: "white",
+          },
+          headerTitleAlign: "center",
+          headerStyle: {
+            backgroundColor: Colors.ewmh.background,
+          },
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          tabBarShowLabel: false,
+        }}
+      />
     </Tabs>
   );
 }
